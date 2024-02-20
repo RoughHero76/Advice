@@ -53,6 +53,6 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Contact
 
-Mohammed Faijan - [@your_twitter](https://twitter.com/your_twitter) - mfaisalkhan9@gmail.com
+Mohammed Faizan  - mfaisalkhan9@gmail.com
 
 Project Link: [Advice](https://github.com/RoughHero76/Advice)
