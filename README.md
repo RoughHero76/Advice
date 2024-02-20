@@ -1,7 +1,8 @@
 # Advice App
 
-![Preview](link-to-preview-image)
+<b> Perview </b>
 
+<img src="https://github.com/RoughHero76/Advice/blob/main/assets/Screenshot1.jpg" alt="Screenshot 1" width="300" />
 ## Description
 
 The Advice app is a React Native application that provides users with advice retrieved from the Advice Slip JSON API. It presents the advice on the screen and offers a visually pleasing experience by randomly selecting one of four background wallpapers each time the app is opened.
@@ -18,9 +19,15 @@ The Advice app is a React Native application that provides users with advice ret
 
 ## Preview
 
-![Screenshot 1](https://github.com/RoughHero76/Advice/blob/main/assets/Screenshot1.jpg)
-![Screenshot 2](https://github.com/RoughHero76/Advice/blob/main/assets/Screenshot2.jpg)
-![Screenshot 3](https://github.com/RoughHero76/Advice/blob/main/assets/Screenshot3.jpg)
+<div align="center">
+  <img src="https://github.com/RoughHero76/Advice/blob/main/assets/Screenshot1.jpg" alt="Screenshot 1" width="150" />
+  <img src="https://github.com/RoughHero76/Advice/blob/main/assets/Screenshot2.jpg" alt="Screenshot 2" width="150" />
+  <img src="https://github.com/RoughHero76/Advice/blob/main/assets/Screenshot3.jpg" alt="Screenshot 3" width="150" />
+   <img src="https://github.com/RoughHero76/Advice/blob/main/assets/Screenshot4.jpg" alt="Screenshot 4" width="150" />
+   <img src="https://github.com/RoughHero76/Advice/blob/main/assets/Screenshot5.jpg" alt="Screenshot 5" width="150" />
+
+</div>
+
 
 ## Getting Started
 
@@ -48,4 +55,4 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 Mohammed Faijan - [@your_twitter](https://twitter.com/your_twitter) - mfaisalkhan9@gmail.com
 
-Project Link: [https://github.com/RoughHero76/Advice] (https://github.com/RoughHero76/Advice)
+Project Link: [Advice](https://github.com/RoughHero76/Advice)
