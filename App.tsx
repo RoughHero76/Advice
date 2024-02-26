@@ -1,117 +1,158 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
-import React from 'react';
-import type {PropsWithChildren} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
   View,
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  ImageBackground,
+  ActivityIndicator,
 } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+// Import all background images
+import Background1 from './assets/Background1.jpg';
+import Background2 from './assets/Background2.jpg';
+import Background3 from './assets/Background3.jpg';
+import Background4 from './assets/Background4.jpg';
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+function LoadingScreen() {
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
+    <View style={styles.loadingContainer}>
+      <ActivityIndicator size="large" color="pink" />
+      <Text style={styles.loadingText}>Pink-u!</Text>
     </View>
   );
 }
 
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+// Define an array with all background images
+const backgrounds = [Background1, Background2, Background3, Background4];
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+function getRandomBackground() {
+  const randomIndex = Math.floor(Math.random() * 4);
+  return backgrounds[randomIndex];
+}
+
+function getAdviceTextColor(backgroundImage: any) {
+  switch (backgroundImage) {
+    case Background1:
+      return 'red';
+    case Background2:
+      return '#3EE9E8';
+    case Background3:
+      return 'pink';
+    case Background4:
+      return 'white';
+    default:
+      return 'black';
+  }
+}
+
+function App() {
+  const [advice, setAdvice] = useState('Click the button to get Advice');
+  const [loading, setLoading] = useState(false);
+  const [backgroundImage, setBackgroundImage] = useState(getRandomBackground());
+
+  async function getAdvice() {
+    setLoading(true);
+    const random = Math.floor(Math.random() * 1000);
+    const res = await fetch('https://api.adviceslip.com/advice?id=' + random);
+    const data = await res.json();
+    setAdvice(data.slip.advice);
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    setBackgroundImage(getRandomBackground());
+  }, []); // Run only once when the component mounts
+
+  const adviceTextColor = getAdviceTextColor(backgroundImage);
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
+    <View style={styles.mainContainer}>
+      <ImageBackground
+        resizeMode="stretch"
+        source={backgroundImage}
+        style={styles.ImageBackground}
       />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+
+      <Text style={[styles.adviceText, {color: adviceTextColor}]}>
+        {' '}
+        " {advice} "{' '}
+      </Text>
+
+      {loading ? <LoadingScreen /> : null}
+
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.button} onPress={getAdvice}>
+          <Text style={styles.buttonText}>Get New</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  mainContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+  adviceText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 350,
+    marginHorizontal: 20,
+    textShadowColor: 'rgba(255, 0, 0, 0.2)',
+    textShadowOffset: {width: 0, height: 0},
+    textShadowRadius: 10,
+    elevation: 5,
   },
-  sectionDescription: {
-    marginTop: 8,
+  buttonContainer: {
+    position: 'absolute',
+    bottom: 50, // Adjust this value to change the distance from the bottom
+    width: '100%',
+    alignItems: 'center',
+  },
+  button: {
+    width: 100,
+    height: 50,
+    backgroundColor: 'rgba(44, 62, 80, 0.4)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    shadowColor: 'black',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.2,
+    shadowRadius: 10,
+    elevation: 5,
+  },
+
+  buttonText: {
+    textShadowColor: 'rgba(255, 0, 0, 0.7)',
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  ImageBackground: {
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+  },
+  loadingContainer: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingText: {
+    color: 'pink',
     fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
+    marginTop: 10,
   },
 });
 
